@@ -4,6 +4,7 @@ go 1.20
 
 require (
 	github.com/gofiber/fiber/v2 v2.48.0
+	github.com/golang-jwt/jwt/v5 v5.0.0
 	github.com/spf13/viper v1.16.0
 	gorm.io/driver/mysql v1.5.1
 	gorm.io/gorm v1.25.2
