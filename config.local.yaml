@@ -1,0 +1,10 @@
+mysql:
+  host:
+  port:
+  database:
+  username:
+  password:
+  charset:
+  prefix:
+jwt:
+  secret:
