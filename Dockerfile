@@ -18,7 +18,7 @@ FROM alpine:latest
 
 WORKDIR /app
 
-COPY --from=build-stage /app/nautilus /app/nautilus
+COPY --from=build-stage /app/nautilus /app/.env /app/
 
 EXPOSE 3000
 
