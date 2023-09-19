@@ -9,7 +9,9 @@ import (
 
 func SetupRoutes(app *fiber.App) {
 	api := app.Group("/api", logger.New())
-	api.Get("/", handler.Index)
+	api.Get("/", func(c *fiber.Ctx) error {
+		panic("This panic is caught by fiber")
+	})
 
 	api.Get("/login", handler.Login)
 }
