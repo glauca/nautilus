@@ -1,0 +1,37 @@
+# [GitHub Actions 文档](https://docs.github.com/cn/actions)
+# [GitHub Actions 的工作流语法](https://docs.github.com/cn/actions/reference/workflow-syntax-for-github-actions)
+# [Alibaba Cloud Container Registry (ACR) Login](https://github.com/marketplace/actions/alibaba-cloud-container-registry-acr-login)
+name: Build and Push Docker Image to ACR
+
+on:
+  push:
+    branches: ['master']
+  pull_request:
+    branches: ['master']
+
+env:
+  IMAGE_TAG: ${{ github.sha }}
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Alibaba Cloud Container Registry (ACR) Login
+        uses: aliyun/acr-login@v1
+        with:
+          username: ${{ secrets.ACR_USERNAME }}
+          password: ${{ secrets.ACR_PASSWORD }}
+          login-server: ${{ vars.ACR_REGISTRY }}
+
+      - name: Build Docker image
+        run: |
+          docker build -t ${{ vars.ACR_REGISTRY }}:latest .
+          docker tag ${{ vars.ACR_REGISTRY }}:latest ${{ vars.ACR_REGISTRY }}:$IMAGE_TAG
+
+      - name: Push Docker image to ACR
+        run: |
+          docker push -a ${{ vars.ACR_REGISTRY }}
